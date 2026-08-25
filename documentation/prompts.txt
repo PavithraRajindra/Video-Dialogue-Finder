@@ -1,0 +1,125 @@
+Prompt 1:
+I have a video link from ok.ru and I want to use ML and DL models on this video for a task. What is the best way to load and use this video for the processing?
+
+Prompt 2:
+The task is to identify the exact frame in the video that a dialogue appears, given an input text dialogue. The model must return the timestamp (till milliseconds), the frame number in which the dialogue first appears (dialogue could be more than 2 frames long), the dialogue extracted by the model, and the identified video frame as an image.
+
+So write the python script to download the video from the video source and load it.
+
+Prompt 3:
+Attached below is my directory structure where model1-3.ipynb will be where i develop and test out the model (kaggle and then upload to github). Give the previously provided code suitable to be run in these repo files
+pavit@Pavithra_Laptop MINGW64 /d/pavithra/github/Quest1_Assignment/Quest1 (main)
+$ ls -R
+.:
+README.md  notebooks/  src/
+
+./notebooks:
+model-1.ipynb  model-2.ipynb  model-3.ipynb
+
+./src:
+config.py  utils.py
+
+Prompt 5:
+Give the config and utils file as suitable code for kaggle cells.
+
+Prompt 9:
+Now, in model1.ipynb on kaggle, I want to use 2-3 ASR models in isolation and obtain results and compare. This is my approach for ASR as model1:
+The approach for the model i’m thinking is that I’ll use an ASR model to obtain the full text with timestamps. I can then iterate through this struct to find the input `dialogue`, and display the other relevant information. With the timestamp now in hand, I can extract the specific frame from the video using the timestamp.
+The ASR models I found on HF for trying are:
+Qwen/Qwen3-ASR-1.7B
+openai/whisper-large-v3
+ai4bharat/indic-conformer-600m-multilingual
+Give the base code to use the Qwen model for my task.
+
+Prompt 10:
+One modification: after downloading the video, upload it as a kaggle dataset and then work on that everytime henceforth. provide code for same.
+
+Prompt 13:
+With Qwen, I got OOM error as below:
+
+```
+OutOfMemoryError: CUDA out of memory. Tried to allocate 6.57 GiB. GPU 0 has a total capacity of 14.56 GiB of which 2.36 GiB is free. Including non-PyTorch memory, this process has 12.20 GiB memory in use. Of the allocated memory 10.67 GiB is allocated by PyTorch, and 1.41 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation. See https://pytorch.org/docs/stable/notes/cuda.html#environment-variables  
+```
+
+Would it be better to chunk the audio and work on chunks? Or would it be better to use LoRA or QLoRA or some other technique?
+
+Prompt 14:
+but wouldn't the OOM error still occur even after chunking... since Qwen is a large model given the constraints on kaggle?
+
+Prompt 15:
+The error occured on running this:
+
+```python
+qwen_results = qwen_model.transcribe(
+    audio=str(AUDIO_PATH),
+    language=None,
+    return_time_stamps=True
+)
+```
+
+everything before it ran fine
+Prompt 20:
+the initial few minutes is silence. that could be why transcript shows None
+handle this case
+
+Prompt 24:
+timestamp must be in this format: Timestamp : HH:MM:SS.sss
+
+Prompt 25:
+Store the intermediate results from the video processing in kaggle.
+
+Prompt 30:
+now that you know the pipeline i used for my qwen model, provide code for the indic model as well, using the chunking code from earlier.
+
+Prompt 31:
+
+```
+---------------------------------------------------------------------------
+AttributeError Traceback (most recent call last)
+/tmp/ipykernel_58/2356119336.py in <cell line: 0>()
+...
+AttributeError: 'numpy.ndarray' object has no attribute 'to'
+```
+
+Prompt 37:
+give me code to save the qwen results, all that may be required later, as a kaggle dataset
+
+Prompt 43:
+these are the other approaches i thought about:
+The approach 1 works only if the input `dialogue` is present exactly in the video, else it returns NULL output. But the test input dialogue could be something semantically similar to the dialogue but not exactly, so ensuring the model isn’t highly sensitive to the exact text could also be useful. I could think about converting the transcript generated from ASR to embeddings, and also the user’s query to embeddings and then performing a similarity search on the embeddings to thereby identify the corresponding frame. Another thing I can factor in using concepts learned in NLP class is to use Minimum edit distance algorithms to identify typos in the input `dialogue`.
+
+Approach 3 is to use an existing multimodal model like Qwen VL for the entire pipeline mentioned in approach 2. I can compare results obtained from all 3 and then choose the best out of them all as the final model, keeping the 3 experiments in a notebooks/ folder in the github repo.
+
+now let's work on approach 2 first. Provide code for the same. This will be in a new notebook btw.
+
+Prompt 44:
+give final complete code for approach 2
+
+Prompt 45:
+Compile all the prompts I entered in this chat and share my prompts in following format:
+Prompt 1:
+[Prompt]
+Prompt2:
+[Prompt]
+...
+
+Prompt 46:
+pavit@Pavithra_Laptop MINGW64 /d/pavithra/github/Quest1_Assignment/Quest1 (main)
+$ ls -R
+.:
+README.md  data/  documentation/  notebooks/  src/
+./data:
+audio.wav  video.mp4
+./documentation:
+prompts.txt
+./notebooks:
+model-1.ipynb  model-2.ipynb  model-3.ipynb
+./src:
+config.py  utils.py
+Above is my directory structure. i need to add my code under src/ take the final code as the combination of model1.ipynb and model2.ipynb Both the notebooks are attached here
+Pause generation if session limit hits 85% and let me know.
+
+Prompt 47:
+Dont remove the video download code! It was used to create data!
+Also, write test cases for the entire codebase. Unit testing is mandatory for this project. Additionally, add a readme: - quick summary of what is in that dir; Add a setup guide md that explains step by step how to install dependencies/venv, etc. and run the code to get output.
+Pause generation if session limit hits 85% and let me know.
