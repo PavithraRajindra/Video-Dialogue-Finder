@@ -1,0 +1,12 @@
+torch
+torchaudio
+opencv-python
+matplotlib
+pandas
+numpy
+jiwer
+qwen-asr
+transformers
+huggingface_hub
+sentence-transformers
+rapidfuzz
