@@ -168,3 +168,6 @@ Also have to think about how any approach will handle ASR if the English is in d
 # Code
 
 So I have to start off with a script to load the video from the URL
+
+Prompt 24:
+Write a README.md in the root folder explaining what the project/task is and what is being done in repo and where to access setup etc. to work on it locally

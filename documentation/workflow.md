@@ -45,7 +45,6 @@ flowchart TD
 ### Phase 1: Input & Configuration Setup
 - **User Actions**:
   - **CLI Mode**: Runs `python -m src.pipeline --dialogue "..."`
-  - **Web UI Mode**: Launches `python -m streamlit run app.py` (or via `./run_app.ps1`), enters a URL or uses `data/video.mp4`, types the dialogue line, and clicks **Run Pipeline**.
 - **System Initialization**:
   - Validates paths defined in `src/config.py` (`data/video.mp4`, `data/audio.wav`, `outputs/`).
   - Resolves optional flags like `--skip-transcription` to bypass re-transcribing known videos.
