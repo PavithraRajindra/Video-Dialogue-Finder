@@ -1,4 +1,4 @@
-# Quest1: Video Dialogue Localization System
+# Quest1: Video Dialogue Finder
 
 A comprehensive deep learning and NLP solution to locate exact spoken dialogue lines within a video, returning the precise timestamp (in milliseconds), frame number, extracted dialogue text, confidence scores, and the corresponding video frame image.
 
