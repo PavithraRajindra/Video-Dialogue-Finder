@@ -124,3 +124,47 @@ Prompt 21:
 Dont remove the video download code! It was used to create data!
 Also, write test cases for the entire codebase. Unit testing is mandatory for this project. Additionally, add a readme: - quick summary of what is in that dir; Add a setup guide md that explains step by step how to install dependencies/venv, etc. and run the code to get output.
 Pause generation if session limit hits 85% and let me know.
+
+Prompt 22:
+Write a detailed workflow of the program for how it works for an end user. Document it, explaining each step that occurs when a user uses this program.
+
+Prompt 23:
+below was my thought process for the approach to the given problem, which i had jotted down in notion before starting coding. write this neatly --without losing my casual writing style-- in approach.md
+# Thoughts
+
+The video begins with credits - on screen text, no audio - acknowledging the author, a couple of actors, the title of the video. This may or may not be present in other videos that may be used to test the generalisation of the model, but it gives me a case to work on. The second case is the video itself contains dialogues spoken throughout the duration with some silences in between. There are no transcripts provided and no on screen captions either. So I am inclined to use an ASR model (Automatic Speech Recognition). Another point I noticed is that since the video is from an episode of The Adventures of Sherlock Holmes, there is a narrator (Watson) apart from other dialogues that happen between multiple people, Watson included.
+
+Now the task is to identify the exact frame in the video that a dialogue appears, given an input text `dialogue`. The model must return the timestamp (till milliseconds), the frame number in which the dialogue first appears (dialogue could be more than 2 frames long), the dialogue extracted by the model, and the identified video frame as an image. 
+I think I can also display the text that occurs in just the 1 frame where the model identifies the dialogue to first appear.
+
+While watching the video to observe for the cases to model for, I noticed that the dialogue to be found lies at the ~5.25-5.28 timestamp. This could be used for checking if the model is obtaining the correct output.
+
+Some things to consider:
+
+- Robust to variations in video quality, resolution, frame rate
+- Robust to “appearance of the dialogue”
+
+Once the model is created and tested out, I can work more on the interface. For the interface itself, I’m thinking of having a streamlit or gradio site which uses the deployed model to return the required outputs. I think I’d like to have a text input `URL`, which can take the url of the video and use that as the input for the model, and also have a file upload option to load videos from local system.
+
+The model should work for any kind of video irrespective of the upload format. The performance should also not deteriorate for lower video resolutions. 
+
+The approach for the model i’m thinking is that I’ll use an ASR model to obtain the full text with timestamps. I can then iterate through this struct to find the input dialogue, and display the other relevant information. With the timestamp now in hand, I can extract the specific frame from the video using the timestamp.
+
+<aside>
+💡
+
+Need to write unit tests
+
+</aside>
+
+Thoughts on extensibility:
+
+The approach 1 works only if the input `dialogue` is present exactly in the video, else it returns NULL output. But the test input dialogue could be something semantically similar to the dialogue but not exactly, so ensuring the model isn’t highly sensitive to the exact text could also be useful. I could think about converting the transcript generated from ASR to embeddings, and also the user’s query to embeddings and then performing a similarity search on the embeddings to thereby identify the corresponding frame. Another thing I can factor in using concepts learned in NLP class is to use Minimum edit distance algorithms to identify typos in the input `dialogue`.
+
+Approach 3 is to use an existing multimodal model like Qwen VL for the entire pipeline mentioned in approach 2. I can compare results obtained from all 3 and then choose the best out of them all as the final model, keeping the 3 experiments in a notebooks/ folder in the github repo.
+
+Also have to think about how any approach will handle ASR if the English is in different accents (e.g., Indian, Chinese, Singaporean, etc.) - think if there’s something that can auto detect accent and accordingly choose the ASR model that performs best for that accent.
+
+# Code
+
+So I have to start off with a script to load the video from the URL
