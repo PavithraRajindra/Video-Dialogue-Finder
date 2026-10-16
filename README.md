@@ -1,4 +1,4 @@
-# Quest1: Video Dialogue Finder
+# Video Dialogue Finder
 
 A comprehensive deep learning and NLP solution to locate exact spoken dialogue lines within a video, returning the precise timestamp (in milliseconds), frame number, extracted dialogue text, confidence scores, and the corresponding video frame image.
 
@@ -17,7 +17,7 @@ Given a video file (or video URL) and an input text query representing a spoken 
 ## 🏗️ Repository Architecture
 
 ```
-Quest1/
+video-dialogue-finder/
 ├── pytest.ini                  # Pytest runner configuration
 ├── README.md                   # Project overview & local setup guide
 │
@@ -190,4 +190,4 @@ Upon completion, results are written to `outputs/final_result.json`:
 
 ## 📚 Further Documentation
 
-For design notes, initial observations, edge-case analysis, and future extension ideas, check out [`documentation/approach.md`](file:///d:/Pavithra/GitHub/Quest1_Assignment/Quest1/documentation/approach.md).
+For design notes, initial observations, edge-case analysis, and future extension ideas, check out [`documentation/approach.md`].
